@@ -19,7 +19,6 @@ import DashboardCard10 from '../partials/dashboard/DashboardCard10';
 import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
-import Banner from '../partials/Banner';
 
 function Dashboard() {
 
@@ -69,11 +68,11 @@ function Dashboard() {
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
 
-              {/* Line chart (Acme Plus) */}
+              {/* Line chart (Low Risk) */}
               <DashboardCard01 />
-              {/* Line chart (Acme Advanced) */}
+              {/* Line chart (Medium Risk) */}
               <DashboardCard02 />
-              {/* Line chart (Acme Professional) */}
+              {/* Line chart (High Risk) */}
               <DashboardCard03 />
               {/* Bar chart (Direct vs Indirect) */}
               <DashboardCard04 />
@@ -82,7 +81,7 @@ function Dashboard() {
               {/* Doughnut chart (Top Countries) */}
               <DashboardCard06 />
               {/* Table (Top Channels) */}
-              <DashboardCard07 />
+              {/* <DashboardCard07 /> */}
               {/* Line chart (Sales Over Time) */}
               <DashboardCard08 />
               {/* Stacked bar chart (Sales VS Refunds) */}
@@ -92,16 +91,15 @@ function Dashboard() {
               {/* Card (Reasons for Refunds) */}
               <DashboardCard11 />
               {/* Card (Recent Activity) */}
-              <DashboardCard12 />
+              {/* <DashboardCard12 /> */}
               {/* Card (Income/Expenses) */}
-              <DashboardCard13 />
-              
+              {/* <DashboardCard13 /> */}
+
             </div>
 
           </div>
         </main>
 
-        <Banner />
 
       </div>
     </div>
