@@ -1,35 +1,78 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import Transition from '../../utils/Transition';
 
 function DashboardCard12() {
+
+
+  
+
+
+  const [accountsDropdownOpen, setAccountsDropdownOpen] = useState(false);
+
+  const accountsTrigger = useRef(null);
+  const accountsDropdown = useRef(null);
+
+
+
+  // close on click outside
+  useEffect(() => {
+    const clickHandler = ({ target }) => {
+      if (!accountsDropdownOpen || accountsDropdown.current.contains(target) || accountsTrigger.current.contains(target)) return;
+      setAccountsDropdownOpen(false);
+    };
+    document.addEventListener('click', clickHandler);
+    return () => document.removeEventListener('click', clickHandler);
+  });
+
+  // close if the esc key is pressed
+  useEffect(() => {
+    const keyHandler = ({ keyCode }) => {
+      if (!accountsDropdownOpen || keyCode !== 27) return;
+      setAccountsDropdownOpen(false);
+    };
+    document.addEventListener('keydown', keyHandler);
+    return () => document.removeEventListener('keydown', keyHandler);
+  });
+
+  const [durationDropdownOpen, setDurationDropdownOpen] = useState(false);
+
+  const durationTrigger = useRef(null);
+  const durationDropdown = useRef(null);
+
+  // close on click outside
+  useEffect(() => {
+    const clickHandler = ({ target }) => {
+      if (!durationDropdownOpen || durationDropdown.current.contains(target) || durationTrigger.current.contains(target)) return;
+      setDurationDropdownOpen(false);
+    };
+    document.addEventListener('click', clickHandler);
+    return () => document.removeEventListener('click', clickHandler);
+  });
+
+  // close if the esc key is pressed
+  useEffect(() => {
+    const keyHandler = ({ keyCode }) => {
+      if (!durationDropdownOpen || keyCode !== 27) return;
+      setDurationDropdownOpen(false);
+    };
+    document.addEventListener('keydown', keyHandler);
+    return () => document.removeEventListener('keydown', keyHandler);
+  });
+
+
+
+
+
   return (
-    <div className="col-span-full xl:col-span-6 bg-white shadow-lg rounded-sm border border-slate-200">
+    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100">
-        <h2 className="font-semibold text-slate-800">Recent Activity</h2>
+        <h2 className="font-semibold text-slate-800">Target a specific set of Population</h2>
       </header>
       <div className="p-3">
 
         {/* Card content */}
-        {/* "Today" group */}
-        <div>
-          <header className="text-xs uppercase text-slate-400 bg-slate-50 rounded-sm font-semibold p-2">Today</header>
+        <div className="relative inline-flex">
           <ul className="my-1">
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-indigo-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-indigo-50" viewBox="0 0 36 36">
-                  <path d="M18 10c-4.4 0-8 3.1-8 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L18.9 22H18c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-slate-800 hover:text-slate-900" href="#0">Nick Mark</a> mentioned <a className="font-medium text-slate-800" href="#0">Sara Smith</a> in a new post</div>
-                  <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* Item */}
             <li className="flex px-2">
               <div className="w-9 h-9 rounded-full shrink-0 bg-rose-500 my-2 mr-3">
                 <svg className="w-9 h-9 fill-current text-rose-50" viewBox="0 0 36 36">
@@ -38,69 +81,140 @@ function DashboardCard12() {
               </div>
               <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
                 <div className="grow flex justify-between">
-                  <div className="self-center">The post <a className="font-medium text-slate-800" href="#0">Post Name</a> was removed by <a className="font-medium text-slate-800 hover:text-slate-900" href="#0">Nick Mark</a></div>
-                  <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
-                  </div>
-                </div>
-              </div>
+                  <div className="self-center">Select
+                  <button
+        ref={accountsTrigger}
+        className="btn bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600"
+        aria-haspopup="true"
+        onClick={() => setAccountsDropdownOpen(!accountsDropdownOpen)}
+        aria-expanded={accountsDropdownOpen}
+      >
+                  <p className="font-bold text-slate-800" >Delinquent </p></button>
+                  <Transition
+        show={accountsDropdownOpen}
+        tag="div"
+        className="origin-top-right z-10 absolute top-full left-0 right-auto md:left-auto md:right-0 min-w-56 bg-white border border-slate-200 pt-1.5 rounded shadow-lg overflow-hidden mt-1"
+        enter="transition ease-out duration-200 transform"
+        enterStart="opacity-0 -translate-y-2"
+        enterEnd="opacity-100 translate-y-0"
+        leave="transition ease-out duration-200"
+        leaveStart="opacity-100"
+        leaveEnd="opacity-0"
+      >
+        <div ref={accountsDropdown}>
+          <div className="text-xs font-semibold text-slate-400 uppercase pt-1.5 pb-2 px-4">Options</div>
+          <ul className="mb-4">
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input type="checkbox" className="form-checkbox" />
+                <span className="text-sm font-medium ml-2">Non-Delinquent</span>
+              </label>
             </li>
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-green-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-green-50" viewBox="0 0 36 36">
-                  <path d="M15 13v-3l-5 4 5 4v-3h8a1 1 0 000-2h-8zM21 21h-8a1 1 0 000 2h8v3l5-4-5-4v3z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-slate-800 hover:text-slate-900" href="#0">Patrick Sullivan</a> published a new <a className="font-medium text-slate-800" href="#0">post</a></div>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input type="checkbox" className="form-checkbox" />
+                <span className="text-sm font-medium ml-2">Default</span>
+              </label>
+            </li>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input type="checkbox" className="form-checkbox" />
+                <span className="text-sm font-medium ml-2">No-Default</span>
+              </label>
+            </li>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input type="checkbox" className="form-checkbox" />
+                <span className="text-sm font-medium ml-2">New</span>
+              </label>
+            </li>
+          </ul>
+          <div className="py-2 px-3 border-t border-slate-200 bg-slate-50">
+            <ul className="flex items-center justify-between">
+              <li>
+                <button className="btn-xs bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600">Clear</button>
+              </li>
+              <li>
+                <button className="btn-xs bg-indigo-500 hover:bg-indigo-600 text-white" onClick={() => setAccountsDropdownOpen(false)} onBlur={() => setAccountsDropdownOpen(false)}>Apply</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        </Transition>
+                  accounts for
+                  <button
+        ref={durationTrigger}
+        className="btn bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600"
+        aria-haspopup="true"
+        onClick={() => setDurationDropdownOpen(!durationDropdownOpen)}
+        aria-expanded={durationDropdownOpen}
+      >
+                  <p className="font-bold text-slate-800 hover:text-slate-900"> last 6 months</p></button>
+                  <Transition
+        show={durationDropdownOpen}
+        tag="div"
+        className="origin-top-right z-10 absolute top-full left-0 right-auto md:left-auto md:right-0 min-w-56 bg-white border border-slate-200 pt-1.5 rounded shadow-lg overflow-hidden mt-1"
+        enter="transition ease-out duration-200 transform"
+        enterStart="opacity-0 -translate-y-2"
+        enterEnd="opacity-100 translate-y-0"
+        leave="transition ease-out duration-200"
+        leaveStart="opacity-100"
+        leaveEnd="opacity-0"
+      >
+        <div ref={durationDropdown}>
+          <div className="text-xs font-semibold text-slate-400 uppercase pt-1.5 pb-2 px-4">Timeline</div>
+          <ul className="mb-4">
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input type="checkbox" className="form-checkbox" />
+                <span className="text-sm font-medium ml-2">last 3 months</span>
+              </label>
+            </li>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input type="checkbox" className="form-checkbox" />
+                <span className="text-sm font-medium ml-2">last 9 months</span>
+              </label>
+            </li>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input type="checkbox" className="form-checkbox" />
+                <span className="text-sm font-medium ml-2">last 12 months</span>
+              </label>
+            </li>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input type="checkbox" className="form-checkbox" />
+                <span className="text-sm font-medium ml-2">last 18 months</span>
+              </label>
+            </li>
+          </ul>
+          <div className="py-2 px-3 border-t border-slate-200 bg-slate-50">
+            <ul className="flex items-center justify-between">
+              <li>
+                <button className="btn-xs bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600">Clear</button>
+              </li>
+              <li>
+                <button className="btn-xs bg-indigo-500 hover:bg-indigo-600 text-white" onClick={() => setAccountsDropdownOpen(false)} onBlur={() => setAccountsDropdownOpen(false)}>Apply</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        </Transition>
+        </div>
+
                   <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
+
+                    <button className="font-medium text-indigo-500 hover:text-indigo-600">View<span className="hidden sm:inline"> -&gt;</span></button>
+
                   </div>
+
                 </div>
               </div>
             </li>
           </ul>
         </div>
-        {/* "Yesterday" group */}
-        <div>
-          <header className="text-xs uppercase text-slate-400 bg-slate-50 rounded-sm font-semibold p-2">Yesterday</header>
-          <ul className="my-1">
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-sky-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-sky-50" viewBox="0 0 36 36">
-                  <path d="M23 11v2.085c-2.841.401-4.41 2.462-5.8 4.315-1.449 1.932-2.7 3.6-5.2 3.6h-1v2h1c3.5 0 5.253-2.338 6.8-4.4 1.449-1.932 2.7-3.6 5.2-3.6h3l-4-4zM15.406 16.455c.066-.087.125-.162.194-.254.314-.419.656-.872 1.033-1.33C15.475 13.802 14.038 13 12 13h-1v2h1c1.471 0 2.505.586 3.406 1.455zM24 21c-1.471 0-2.505-.586-3.406-1.455-.066.087-.125.162-.194.254-.316.422-.656.873-1.028 1.328.959.878 2.108 1.573 3.628 1.788V25l4-4h-3z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center border-b border-slate-100 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-slate-800 hover:text-slate-900" href="#0">240+</a> users have subscribed to <a className="font-medium text-slate-800" href="#0">Newsletter #1</a></div>
-                  <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {/* Item */}
-            <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-indigo-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-indigo-50" viewBox="0 0 36 36">
-                  <path d="M18 10c-4.4 0-8 3.1-8 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L18.9 22H18c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z" />
-                </svg>
-              </div>
-              <div className="grow flex items-center text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center">The post <a className="font-medium text-slate-800" href="#0">Post Name</a> was suspended by <a className="font-medium text-slate-800 hover:text-slate-900" href="#0">Nick Mark</a></div>
-                  <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
+
 
       </div>
     </div>
